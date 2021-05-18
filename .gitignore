@@ -3,3 +3,7 @@ node_modules
 
 # Ignore the JS files (Will be included in prod builds)
 *.js
+
+# Ignore Config files
+eula.txt
+properties.yml
