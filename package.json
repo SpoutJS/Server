@@ -1,0 +1,28 @@
+{
+  "name": "spout",
+  "version": "1.0.1",
+  "description": "The simple, easy to use, and staff friendly Spigot fork",
+  "main": ".spout/index.ts",
+  "scripts": {
+    "start": "ts-node .spout/index.ts node ./spout/index.js;",
+    "compile": "tsc .spout/index.ts;"
+  },
+  "author": "Blocks_n_more & Corman",
+  "license": "GPL",
+  "keywords": [
+    "Minecraft",
+    "Spigot",
+    "Paper",
+    "Server",
+    "Plugins"
+  ],
+  "dependencies": {
+    "@types/node": "^15.3.0",
+    "minecraft-data": "^2.84.0",
+    "minecraft-protocol": "^1.25.0",
+    "prismarine-chunk": "^1.22.0",
+    "remove": "^0.1.5",
+    "vec3": "^0.1.7",
+    "yaml": "^1.10.2"
+  }
+}
