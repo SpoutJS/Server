@@ -18,9 +18,9 @@ spout:
   hardcore: false # If users have 1 life
 
   player: # Player specific settings
-    gamemode: 0 # Default gamemode
+    gamemode: 'survival' # Default gamemode
     forceGamemode: true # Set player's gamemode to default on join
-    allop: true # Everyone has every permission node
+    allOP: true # Everyone has every permission node
 
   world:
     generator: "flat" # Built in generators: FLAT, SPOUT

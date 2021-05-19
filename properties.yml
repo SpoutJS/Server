@@ -13,20 +13,20 @@
 
 spout:
   motd: "A Spout Server" # The server MOTD when pinging in the server list
-  maxPlayers: 20 # Maximum users on the server
+  maxplayers: 20 # Maximum users on the server
   port: 25565 # Server port
   hardcore: false # If users have 1 life
 
   player: # Player specific settings
     gamemode: 0 # Default gamemode
-    forceGamemode: true # Set player's gamemode to default on join
+    forcegamemode: true # Set player's gamemode to default on join
     allop: true # Everyone has every permission node
 
   world:
     generator: "flat" # Built in generators: FLAT, SPOUT
-    viewDistance: 10 # How far the player can see (in chunks)
+    viewdistance: 10 # How far the player can see (in chunks)
 
 messages: 
-  escapeCodes: false # Refer to https://blocksnmore.is-inside.me/i6S9QhTI.png
-  unknownCommand: "Unknown command!"
-  missingPermissions: "You don't have permission to do this!"
+  escapecodes: false # Refer to https://blocksnmore.is-inside.me/i6S9QhTI.png
+  unknowncommand: "Unknown command!"
+  missingperms: "You don't have permission to do this!"

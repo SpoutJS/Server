@@ -1,6 +1,6 @@
 import SpoutServer from '../../../core/server';
 import { ChatEvent } from './events';
 
-export const inject = (server: SpoutServer<any>) => {
+export const main = (server: SpoutServer<any>) => {
     server.addEvent(ChatEvent);
 }

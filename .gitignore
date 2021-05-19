@@ -1,10 +1,4 @@
-# Ignore the 2 tb node modules :kek:
+# Ignore the 2 tbh node modules :kek:
 node_modules
 
 *.js
-
-# Ignore Config files
-eula.txt
-properties.yml
-
-server/*

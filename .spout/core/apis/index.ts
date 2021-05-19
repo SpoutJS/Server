@@ -1,5 +1,5 @@
 import Player from "./player";
-import Chat from "../../internal/plugins/chat/api"; 
+import Chat from "./chat"; 
 import Block from "./block";
 import MapSystem from "./map";
 

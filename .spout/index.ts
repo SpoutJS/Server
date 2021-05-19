@@ -40,7 +40,7 @@ const lines = text.split("\n");
 const main = async () => {
     for (const line of lines) {
         console.log(line);
-        await sleep(200);
+        await sleep(125);
     }
     await eula();
     let configuration = await config()
@@ -50,7 +50,7 @@ const main = async () => {
         "online-mode": true,
         version: "1.16.4",
         maxPlayers: configuration.spout.maxplayers,
-    });
+    }, configuration);
     console.log('[SPOUT] Loading plugins...');
     await loadInternalPlugins(server);
 };

@@ -28,16 +28,8 @@ export const loadPlugin = async (file: string, server: SpoutServer<any>, isInter
     try {
         const plugin = require(`../../internal/plugins/${file}`);
         if (plugin?.main) {
-            const res = plugin.main(config);
+            const res = plugin.main(server, config);
             console.log(`     > Ran the plugin's main code`);
-            if (res?.inject) {
-                res.inject(server);
-                console.log(`     > Injected plugin`);
-            }
-        }
-        if (plugin?.inject) {
-            plugin.inject(server);
-            console.log(`     > Injected plugin`);
         }
     } catch (err) {
         createPluginError(`../../internal/plugins/${file}`, err, isInternal);
