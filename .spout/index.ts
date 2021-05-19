@@ -40,7 +40,7 @@ const lines = text.split("\n");
 const main = async () => {
     for (const line of lines) {
         console.log(line);
-        await sleep(250);
+        await sleep(200);
     }
     await eula();
     let configuration = await config()

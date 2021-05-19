@@ -9,3 +9,5 @@ properties.yml
 
 # Ignore Custom Plugins
 plugins/
+
+server/*

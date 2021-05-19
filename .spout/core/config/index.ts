@@ -5,15 +5,15 @@ import { readFile, writeFile } from 'fs/promises';
 
 const main = async () => {
     console.log("[SPOUT] Loading config!")
-    if (!existsSync('./properties.yml')) {
+    if (!existsSync('./server/config.yml')) {
         console.log("[SPOUT] No config file found! Creating one.")
         await writeFile(
-            './properties.yml',
+            './server/config.yml',
             await readFile('./.spout/core/config/default.yml')
         );
     }
     console.log("[SPOUT] Config loaded!")
-    return await parse(await readFile('./properties.yml', 'utf-8'));
+    return await parse(await readFile('./server/config.yml', 'utf-8'));
 };
 
 export default main;

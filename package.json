@@ -4,7 +4,7 @@
   "description": "The simple, easy to use, and staff friendly Spigot fork",
   "main": ".spout/index.ts",
   "scripts": {
-    "start": "tsc -p .; node .spout/index.js",
+    "start": "tsc -p . && node .spout/index.js",
     "dev": "ts-node .spout/index.ts"
   },
   "author": "Blocks_n_more & Corman",

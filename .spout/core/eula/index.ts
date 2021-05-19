@@ -10,16 +10,16 @@ eula=false`;
 
 const eula = async () => {
     console.log("[SPOUT] Checking EULA...")
-    if (!existsSync('./eula.txt')) {
-        await writeFile('./eula.txt', eulaMessage);
+    if (!existsSync('./server/eula.txt')) {
+        await writeFile('./server/eula.txt', eulaMessage);
         console.log("[SPOUT] No EULA file found! Creating one.")
     }
-    const eulaText = (await readFile('./eula.txt'))
+    const eulaText = (await readFile('./server/eula.txt'))
         .toString()
         .split(' ')
         .join('');
-    if (eulaText.toLowerCase().includes('eula=true')) {
-        console.log(
+    if (!(eulaText.toLowerCase().includes('eula=true'))) {
+        console.error(
             '[SPOUT] EULA has not been accepted yet! Please accept the eula before continuing!'
         );
         process.exit(1);
