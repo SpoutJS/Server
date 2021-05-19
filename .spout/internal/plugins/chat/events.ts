@@ -8,6 +8,6 @@ interface Data {
 export class ChatEvent extends Event<Data> {
     static event = 'chat';
     run() {
-        this.player.sendMessage(this.data.message)
+        this.player.chat(this.data.message)
     }
 }
