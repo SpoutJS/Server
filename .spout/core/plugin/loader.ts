@@ -14,7 +14,7 @@ const isDir = (file: string, dir = './.spout/internal/plugins') => statSync(`${d
 const listInternalPlugins = () => listInternalFiles().then(files => files.filter(i => isDir(i)));
 
 export const loadPlugin = async (file: string, server: SpoutServer<any>, isInternal: boolean) => {
-    console.log(`- Found an${isInternal ? ' internal' : ''} plugin called ${JSON.stringify(file)}`);
+    console.log(`- Found an${isInternal ? ' internal' : ''} plugin at ${JSON.stringify(file)}`);
     console.log(`     > Attempting to load plugin`)
     let config;
     try {
@@ -27,15 +27,15 @@ export const loadPlugin = async (file: string, server: SpoutServer<any>, isInter
     }
     try {
         const plugin = require(`../../internal/plugins/${file}`);
-        if (plugin.main) {
+        if (plugin?.main) {
             const res = plugin.main(config);
             console.log(`     > Ran the plugin's main code`);
-            if (res.inject) {
+            if (res?.inject) {
                 res.inject(server);
                 console.log(`     > Injected plugin`);
             }
         }
-        if (plugin.inject) {
+        if (plugin?.inject) {
             plugin.inject(server);
             console.log(`     > Injected plugin`);
         }
@@ -46,6 +46,6 @@ export const loadPlugin = async (file: string, server: SpoutServer<any>, isInter
 
 export const loadInternalPlugins = async (server: SpoutServer<any>) => {
     for (const file of await listInternalPlugins()) {
-        loadPlugin(file, server, true);
+        await loadPlugin(file, server, true);
     }
 };
