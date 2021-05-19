@@ -5,13 +5,9 @@ interface Data {
     message: string;
 }
 
-export class ChatEvent extends Event {
-    event = 'chat';
-    constructor(public player: Player, public data: Data) {
-        super();
-    }
+export class ChatEvent extends Event<Data> {
+    static event = 'chat';
     run() {
-        if (this.cancelled) return;
-        this.player.sendMessage(this.data.message);
+        this.player.sendMessage(this.data.message)
     }
 }

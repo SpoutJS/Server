@@ -27,9 +27,14 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
     constructor(public server: Server) {
         super();
         this.events = [];
-        this.server.on("login", (client) => {
+        this.server.on("login", client => {
             const player = new Player(this, client);
             for (const event of this.events) {
+                if (event.event === 'login') {
+                    const creation: Event<T> = new (event as any)(player, null);
+                    creation.run();
+                    continue;
+                }
                 event.init(player);
             }
         });

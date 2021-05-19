@@ -2,17 +2,20 @@ import Player from '../apis/player';
 
 import { Client } from "minecraft-protocol";
 
-export default class Event {
+export default abstract class Event<T> {
     static event: string;
     cancelled: boolean;
-    constructor() {
+    constructor(public player: Player, public data: T) {
         this.cancelled = false;
     }
-    static init(player: Player) {
+    static init<T>(player: Player) {
         player.client.on(this.event, data => {
-            const event = this.constructor(player, data);
+            const event: Event<T> = this.constructor(player, data);
             player.server.emit('chat', event);
-            Promise.resolve(() => event.run());
+            Promise.resolve(() => {
+                if (event.cancelled) return;
+                event.run();
+            });
         });
     }
     cancel() {
@@ -21,4 +24,5 @@ export default class Event {
     uncancel() {
         this.cancelled = false;
     }
+    abstract run(): void;
 }
