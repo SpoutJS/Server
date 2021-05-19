@@ -7,7 +7,4 @@ node_modules
 eula.txt
 properties.yml
 
-# Ignore Custom Plugins
-plugins/
-
 server/*
