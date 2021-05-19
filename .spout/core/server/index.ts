@@ -5,10 +5,10 @@ import {
     Client,
 } from "minecraft-protocol";
 
-import { Player, Chat } from "../apis/Spout";
-import { ChatEvent } from "../events";
+import { Player, Chat } from "../apis";
 
 import * as EventEmitter from "events";
+import Event from "../events";
 
 interface BroadcastOptions {
     excludes?: string[];
@@ -22,13 +22,21 @@ const broadcastDefaults: BroadcastOptions = {
     formatColors: true,
 };
 
-export default class SpoutServer extends EventEmitter {
+export default class SpoutServer<T extends typeof Event> extends EventEmitter {
+    events: T[];
     constructor(public server: Server) {
         super();
+        this.events = [];
         this.server.on("login", (client) => {
             const player = new Player(this, client);
-            ChatEvent.init(player);
+            for (const event of this.events) {
+                event.init(player);
+            }
         });
+    }
+
+    addEvent(event: T) {
+        this.events.push(event);
     }
 
     get clients() {

@@ -52,7 +52,7 @@ const main = async () => {
         maxPlayers: configuration.spout.maxplayers,
     });
     console.log('[SPOUT] Loading plugins...');
-    await loadInternalPlugins();
+    await loadInternalPlugins(server);
 };
 
 main();

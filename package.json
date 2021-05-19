@@ -5,7 +5,8 @@
   "main": ".spout/index.ts",
   "scripts": {
     "start": "tsc -p . && node .spout/index.js",
-    "dev": "ts-node .spout/index.ts"
+    "dev": "ts-node-dev .spout/index.ts",
+    "live": "concurrently \"tsc -w\" \"nodemon --watch '**/**/*' '.spout/internal/plugins/**/*' --ext ts\""
   },
   "author": "Blocks_n_more & Corman",
   "license": "GPL",

@@ -1,6 +1,6 @@
 import { Client } from "minecraft-protocol";
 import SpoutServer from "../../server";
-import { Chat } from "../Spout";
+import { Chat } from "..";
 
 interface PlayerData {
     health: number;
@@ -8,7 +8,7 @@ interface PlayerData {
 
 export default class Player {
     data: PlayerData;
-    constructor(public server: SpoutServer, public client: Client) {
+    constructor(public server: SpoutServer<any>, public client: Client) {
         this.data = {
             health: 20
         };
