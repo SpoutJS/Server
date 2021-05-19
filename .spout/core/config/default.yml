@@ -24,7 +24,9 @@ spout:
 
   world:
     generator: "flat" # Built in generators: FLAT, SPOUT
+    viewdistance: 10 # How far the player can see (in chunks)
 
 messages: 
+  escapecodes: false # Refer to https://blocksnmore.is-inside.me/i6S9QhTI.png
   unknowncommand: "Unknown command!"
   missingperms: "You don't have permission to do this!"

@@ -1,9 +1,11 @@
 # Ignore the 2 tb node modules :kek:
 node_modules
 
-# Ignore the JS files (Will be included in prod builds)
 *.js
 
 # Ignore Config files
 eula.txt
 properties.yml
+
+# Ignore Custom Plugins
+plugins/
