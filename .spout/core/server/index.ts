@@ -65,8 +65,9 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
         });
     }
 
-    addEvent(event: T) {
-        this.events.push(event);
+    addEvent(...events: T[]) {
+        this.events.push(...events);
+        return this;
     }
 
     get maxPlayers() {
@@ -76,7 +77,16 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
         return this.server.clients as { [id: string]: Client };
     }
 
-    broadcast(message: JSON[], opts: BroadcastOptions = {}) {
+    get players(): Player[] {
+        return Object.values(this.clients).map(i => new Player(this, i));
+    }
+
+    broadcast(message: string | { translate: string, extra: any[] }, opts: BroadcastOptions = {}) {
+        opts = { ...broadcastDefaults, ...opts }
+        console.log(opts.formatColors, typeof message === 'string')
+        if (opts.formatColors && typeof message === 'string') {
+            message = new Chat().translate(message);
+        }
         opts = { ...opts, ...broadcastDefaults };
         for (const client of Object.values(this.clients)) {
             if (client == null) continue;
@@ -89,14 +99,12 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
             }
 
             client.write("chat", {
-                message: JSON.stringify({
-                    translate: '',
-                    extras: message
-                }),
+                message: JSON.stringify(message),
                 position: 0,
                 sender: "0",
             });
         }
+        return this;
     }
 
     static create(opts: ServerOptions, config: Config) {

@@ -10,7 +10,7 @@ interface Component {
 
 export default class ChatAPI {
     constructor() {}
-    translateBare(message: string, exclude = ['l']) {
+    translateBare(message: string, exclude = [ 'l' ]) {
         let components: Component[] = [];
         const defaults: Component = {
             modifiers: [],
@@ -24,6 +24,11 @@ export default class ChatAPI {
                 if (char === '&') {
                     components[components.length - 1].text += '&';
                     continue;
+                }
+                if (char === 'l') {
+                    components.push(current);
+                    current = clone(components[components.length - 2]);
+                    current.text = '';
                 }
                 nextModifier = false;
                 current.modifiers.push(char);
@@ -74,7 +79,21 @@ export default class ChatAPI {
         }
         return finalOutput;
     }
+    translateComponents(message: string) {
+        return this.convertComponents(this.translateBare(message))
+            .map(i => {
+                if (i.color == null) {
+                    i.color = 'r';
+                }
+                return i;
+            });
+    }
     translate(message: string) {
-        return this.convertComponents(this.translateBare(message));
+        let text = '';
+        let extra = this.translateComponents(message);
+        return {
+            translate: text,
+            extra
+        }
     }
 }
