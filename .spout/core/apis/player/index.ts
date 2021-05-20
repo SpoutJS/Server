@@ -41,6 +41,7 @@ export default class Player {
         health: 20,
         maxHealth: 20
     };
+    location: Location = null;
     ready = false;
 
     constructor(public _server: SpoutServer<any>, public _client: Client) {
@@ -60,6 +61,18 @@ export default class Player {
     sendPacket<T>(packet: string, data: T) {
         this._client.write(packet, data);
         return this;
+    }
+    sendPacketForEach<T>(packet: string, callback: (player: Player) => T) {
+        for (const player of this._server.players) {
+            if (player.uuid === this.uuid) continue;
+            this.sendPacket(packet, callback(player));
+        }
+    }
+    sendPacketNear<T>(packet: string, data: T) {
+        for (const player of this._server.players) {
+            if (player.uuid === this.uuid) continue;
+            player.sendPacket(packet, data);
+        }
     }
 
     teleport(loc: Location) {

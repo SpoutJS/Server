@@ -13,6 +13,7 @@ export const main = (server: SpoutServer<any>) => {
 }
 
 export class ConnectEvent extends Event<void> {
+    static emit = 'connect';
     uncancellable = true;
     run() {
         console.log('Fired!');
@@ -57,8 +58,10 @@ export class LoginEvent extends Event<void> {
 
         MapSystem.generate(player, 10, 'flat');
             
-        const event = new ConnectEvent(this.player, null);
-        server.emit('connect', event);
-        event.run();
+        setTimeout(() => {
+            const event = new ConnectEvent(this.player, null);
+            server.emit('connect', event);
+            event.run();
+        }, 0);
     }
 }

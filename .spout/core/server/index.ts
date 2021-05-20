@@ -45,11 +45,14 @@ interface Config {
 
 export default class SpoutServer<T extends typeof Event> extends EventEmitter {
     events: T[];
+    players: Player[];
     constructor(public server: Server, public config: Config) {
         super();
         this.events = [];
-        this.server.on("login", client => {
+        this.players = [];
+        this.server.on('login', client => {
             const player = new Player(this, client);
+            this.players.push(player);
             for (const event of this.events) {
                 if (event.event === 'login') {
                     const creation: Event<T> = new (event as any)(player, null);
@@ -75,10 +78,6 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
     }
     get clients() {
         return this.server.clients as { [id: string]: Client };
-    }
-
-    get players(): Player[] {
-        return Object.values(this.clients).map(i => new Player(this, i));
     }
 
     broadcast(message: string | { translate: string, extra: any[] }, opts: BroadcastOptions = {}) {
