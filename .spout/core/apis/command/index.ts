@@ -4,40 +4,39 @@ interface CommandData {
     command: string,
     description: string,
     aliases: string[],
-    run: (player: Player, args: string[]) => any;
+    run: (player: Player, args?: string[]) => any;
 }
+const commands = new Map<string, CommandData>();
 
-export default class Command {
-    commands: Map<string, CommandData>;
+export default class Command{
     constructor(cmdData?: CommandData){
-        this.commands = new Map();
         if (cmdData) {
-            if (this.commands.has(cmdData.command.toLowerCase())) {
+            if (commands.has(cmdData.command.toLowerCase())) {
                 console.log(`[SPOUT ERROR] Attempted command register of existing command ${cmdData.command}!`);
                 return;
             } else {
-                this.commands.set(cmdData.command.toLowerCase(), cmdData);
+                commands.set(cmdData.command.toLowerCase(), cmdData);
                 if(cmdData.aliases){
                     for(let command of cmdData.aliases){
-                        if (this.commands.has(command.toLowerCase())){
+                        if (commands.has(command.toLowerCase())){
                             console.log(`[SPOUT ERROR] Attempted command register of exsisting command ${command}!`);
                         } else {
-                            this.commands.set(command.toLowerCase(), cmdData);
+                            commands.set(command.toLowerCase(), cmdData);
                         }
                     }
                 }
             }
         }
     }
-    getCommand(command: string){
-        if(this.commands.has(command.toLowerCase())){
-            return this.commands.get(command.toLowerCase()).run;
+    getCommand(command: string): CommandData['run']{
+        if(commands.has(command.toLowerCase())){
+            return commands.get(command.toLowerCase()).run;
         }
     }
-    isCommand(command: string){
-        return this.commands.has(command.toLowerCase());
+    isCommand(command: string): boolean{
+        return commands.has(command.toLowerCase());
     }
-    getCommandData(command: string){
-        return this.commands.get(command.toLowerCase());
+    getCommandData(command: string): CommandData{
+        return commands.get(command.toLowerCase());
     }
 }

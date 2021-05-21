@@ -16,7 +16,6 @@ export class ConnectEvent extends Event<void> {
     static emit = 'connect';
     uncancellable = true;
     run() {
-        console.log('Fired!');
         this.player.ready = true;
     }
 }

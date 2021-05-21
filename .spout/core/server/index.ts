@@ -10,6 +10,9 @@ import { Player, Chat } from "../apis";
 import * as EventEmitter from "events";
 import Event from "../events";
 
+// @ts-ignore
+import * as json from '../../../package.json';
+
 interface BroadcastOptions {
     to?: Player | Player[];
     formatColors?: boolean;
@@ -111,5 +114,13 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
         const server = createServer(opts);
         console.log("[SPOUT] Started server!");
         return new SpoutServer(server, config);
+    }
+    
+    get version(){
+        return json.version;
+    }
+
+    get developers(){
+        return ["Blocks_n_more", "Corman"]
     }
 }
