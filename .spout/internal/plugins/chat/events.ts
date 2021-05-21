@@ -8,6 +8,7 @@ export class CommandEvent extends Event<Data> {
     static event = "chat";
 
     run() {
+        if (!this.data.message.startsWith("/")) return;
         if (
             !new Command().isCommand(
                 this.data.message.toString().substring(1).toLowerCase()
