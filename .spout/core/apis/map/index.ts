@@ -1,10 +1,10 @@
-import * as createChunkType from 'prismarine-chunk';
-import { Vec3 } from 'vec3';
-import { Client } from 'minecraft-protocol';
-import Block from '../block';
-import { Player } from '..';
+import * as createChunkType from "prismarine-chunk";
+import { Vec3 } from "vec3";
+import { Client } from "minecraft-protocol";
+import Block from "../block";
+import { Player } from "..";
 
-const Chunk = createChunkType('1.16.4');
+const Chunk = createChunkType("1.16.4");
 
 interface MapLocation {
     x: number;
@@ -18,17 +18,13 @@ export class MapSystem {
     constructor() {
         this.generators = new Map();
     }
-    generate(player: Player, size: number, generator: string = 'flat') {
+    generate(player: Player, size: number, generator: string = "flat") {
         const generatorName = generator.toLowerCase();
         const gen = this.generators.get(generatorName);
         if (this.generators.has(generatorName)) {
             for (let x = size - size * 2; x < size * 2; x++) {
                 for (let z = size - size * 2; z < size * 2; z++) {
-                    this.writeChunk(
-                        player,
-                        gen({ x, z }),
-                        { x, z }
-                    );
+                    this.writeChunk(player, gen({ x, z }), { x, z });
                 }
             }
         } else {
@@ -38,7 +34,7 @@ export class MapSystem {
     register(name: string, generator: Generator) {
         if (this.generators.has(name.toLowerCase()))
             return console.error(
-                '[SPOUT ERROR] Attempted to overwrite an existing map generator!'
+                "[SPOUT ERROR] Attempted to overwrite an existing map generator!"
             );
         this.generators.set(name.toLowerCase(), generator);
         console.log(
@@ -46,20 +42,18 @@ export class MapSystem {
         );
     }
     writeChunk(player: Player, chunk: any, location: MapLocation) {
-        player.sendPacket('map_chunk', {
+        player.sendPacket("map_chunk", {
             x: location.x,
             z: location.z,
             groundUp: true,
             biomes:
-                chunk.dumpBiomes !== undefined
-                    ? chunk.dumpBiomes()
-                    : undefined,
+                chunk.dumpBiomes !== undefined ? chunk.dumpBiomes() : undefined,
             heightmaps: {
-                type: 'compound',
-                name: '',
+                type: "compound",
+                name: "",
                 value: {
                     MOTION_BLOCKING: {
-                        type: 'longArray',
+                        type: "longArray",
                         value: new Array(36).fill([0, 0]),
                     },
                 },
@@ -73,7 +67,7 @@ export class MapSystem {
 
 const mapSystem = new MapSystem();
 
-mapSystem.register('flat', loc => {
+mapSystem.register("flat", (loc) => {
     const grass = new Block(8, 1);
     let chunk = new Chunk();
     for (let x = 0; x < 16; x++) {
@@ -81,6 +75,7 @@ mapSystem.register('flat', loc => {
             grass.set(chunk, new Vec3(x, 60, z));
             for (let y = 0; y < 256; y++) {
                 Block.setSkyLight(chunk, new Vec3(x, y, z));
+                chunk.setBiome("Superflat", new Vec3(x, y, z));
             }
         }
     }
