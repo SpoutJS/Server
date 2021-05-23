@@ -34,41 +34,5 @@ export const main = (server: SpoutServer<any>) => {
 				});
 			});
 		}
-
-        // BIG BOI ERROR: Crashes client from server 
-		player._client.on(
-			'position',
-			({ x, y, z, onGround, yaw, pitch } = {}) => {
-				for (const other of server.players) {
-					if (player.uuid === other.uuid) continue;
-					other.sendPacket('entity_teleport', {
-						entityId: player.id,
-						x: x,
-						y: y,
-						z: z,
-						yaw: yaw,
-						pitch: pitch,
-						onGround: onGround,
-					});
-				}
-			}
-		);
-        player._client.on(
-			'position_look',
-			({ x, y, z, onGround, yaw, pitch } = {}) => {
-				for (const other of server.players) {
-					if (player.uuid === other.uuid) continue;
-					other.sendPacket('entity_teleport', {
-						entityId: player.id,
-						x: x,
-						y: y,
-						z: z,
-						yaw: yaw,
-						pitch: pitch,
-						onGround: onGround,
-					});
-				}
-			}
-		);
 	});
 };
