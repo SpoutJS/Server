@@ -28,5 +28,5 @@ spout:
 
 messages: 
   escapecodes: false # Refer to https://blocksnmore.is-inside.me/i6S9QhTI.png
-  unknowncommand: "Unknown command!"
+  unknowncommand: "Unknown command... Type /help to use a command that actually exists smh."
   missingperms: "You don't have permission to do this!"
