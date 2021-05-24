@@ -16,15 +16,18 @@ export class MoveEvent extends Event<any> {
 }
 
 function move(player: Player, data: any) {
-	let { x, y, z, onGround } = data;
+	let { x, y, z, onGround, yaw, pitch } = data;
 	for (let user of player._server.players) {
 		if (player.uuid === user.uuid) continue;
-		user.sendPacket('rel_entity_move', {
-			entityId: user.id,
-			dX:x,
-			dY:y,
-			dZ:z,
-			onGround,
+
+		user.sendPacket('position', {
+			entityId: player.id,
+			x,
+			y,
+			z,
+			yaw,
+			pitch,
+			onGround
 		});
 	}
 }

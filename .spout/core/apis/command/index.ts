@@ -1,42 +1,74 @@
-import { Player } from "../";
+import { Player } from '../';
+import { parsers } from './parsers';
 
 interface CommandData {
-    command: string,
-    description: string,
-    aliases: string[],
-    run: (player: Player, args?: string[]) => any;
+	command: string;
+	description: string;
+	aliases: string[];
+	run: (player: Player, args?: string[]) => any;
 }
 const commands = new Map<string, CommandData>();
 
-export default class Command{
-    constructor(cmdData?: CommandData){
-        if (cmdData) {
-            if (commands.has(cmdData.command.toLowerCase())) {
-                console.log(`[SPOUT ERROR] Attempted command register of existing command ${cmdData.command}!`);
-                return;
-            } else {
-                commands.set(cmdData.command.toLowerCase(), cmdData);
-                if(cmdData.aliases){
-                    for(let command of cmdData.aliases){
-                        if (commands.has(command.toLowerCase())){
-                            console.log(`[SPOUT ERROR] Attempted command register of exsisting command ${command}!`);
-                        } else {
-                            commands.set(command.toLowerCase(), cmdData);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    getCommand(command: string): CommandData['run']{
-        if(commands.has(command.toLowerCase())){
-            return commands.get(command.toLowerCase()).run;
-        }
-    }
-    isCommand(command: string): boolean{
-        return commands.has(command.toLowerCase());
-    }
-    getCommandData(command: string): CommandData{
-        return commands.get(command.toLowerCase());
-    }
+export default class Command {
+	constructor(cmdData?: CommandData) {
+		if (cmdData) {
+			if (commands.has(cmdData.command.toLowerCase())) {
+				console.log(
+					`[SPOUT ERROR] Attempted command register of existing command ${cmdData.command}!`
+				);
+				return;
+			} else {
+				commands.set(cmdData.command.toLowerCase(), cmdData);
+				if (cmdData.aliases) {
+					for (let command of cmdData.aliases) {
+						if (commands.has(command.toLowerCase())) {
+							console.log(
+								`[SPOUT ERROR] Attempted command register of exsisting command ${command}!`
+							);
+						} else {
+							commands.set(command.toLowerCase(), cmdData);
+						}
+					}
+				}
+			}
+		}
+	}
+	getCommand(command: string): CommandData['run'] {
+		if (commands.has(command.toLowerCase())) {
+			return commands.get(command.toLowerCase()).run;
+		}
+	}
+	isCommand(command: string): boolean {
+		return commands.has(command.toLowerCase());
+	}
+	getCommandData(command: string): CommandData {
+		return commands.get(command.toLowerCase());
+	}
+	get commands() {
+		return commands;
+	}
+	get commandData() {
+		let CmdData = [];
+
+		commands.forEach((value, key) => {
+			CmdData.push({
+				type: 'literal',
+				name: key,
+				executable: true,
+				redirects: [],
+				children: [],
+			});
+		});
+
+		return JSON.stringify({
+			root: {
+				type: 'root',
+				name: 'root',
+				executable: false,
+				redirects: [],
+				children: CmdData,
+			},
+			parsers: parsers,
+		});
+	}
 }
