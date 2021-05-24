@@ -1,5 +1,5 @@
 # Server
-Spout is a minecraft server implementation written in Typescript. It strives to be performant & Easy to develop for.
+Spout is a minecraft server implementation written in Typescript. It strives to be performant & easy to develop for using languages like typescript.
 
 # Documentation
-soon:tm:
+soon™️
