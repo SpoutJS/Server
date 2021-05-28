@@ -12,6 +12,9 @@ import Event from "../events";
 
 // @ts-ignore
 import * as json from '../../../package.json';
+import logger from "../../utils/logger";
+
+const serverLogs = logger.create('Spout').create('Server');
 
 interface BroadcastOptions {
     to?: Player | Player[];
@@ -23,14 +26,14 @@ const broadcastDefaults: BroadcastOptions = {
     formatColors: true,
 };
 
-interface Config {
+export interface Config {
     spout: {
         motd: string,
         maxPlayers: number,
         port: number,
         hardcore: boolean,
         player: {
-            gamemode: 'survival' | 'creative' | 'adventure' | 'spectator',
+            gamemode: 'survival' | 'creative' | 'adventure' | 'spectator' | 0 | 1 | 2 | 3,
             forceGamemode: boolean,
             allOP: boolean
         },
@@ -85,7 +88,6 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
 
     broadcast(message: string | { translate: string, extra: any[] }, opts: BroadcastOptions = {}) {
         opts = { ...broadcastDefaults, ...opts }
-        console.log(opts.formatColors, typeof message === 'string')
         if (opts.formatColors && typeof message === 'string') {
             message = new Chat().translate(message);
         }
@@ -110,9 +112,9 @@ export default class SpoutServer<T extends typeof Event> extends EventEmitter {
     }
 
     static create(opts: ServerOptions, config: Config) {
-        console.log("[SPOUT] Starting server!");
+        serverLogs.info('Starting...');
         const server = createServer(opts);
-        console.log("[SPOUT] Started server!");
+        serverLogs.info("Started server!");
         return new SpoutServer(server, config);
     }
     

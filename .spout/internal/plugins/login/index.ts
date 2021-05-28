@@ -31,7 +31,16 @@ export class LoginEvent extends Event<void> {
             .sendPacket('login', {
                 entityId: player.uuid,
                 isHardcore: false,
-                gameMode: config.spout.player.gamemode,
+                gameMode: {
+                    'survival':0,
+                    'creative':1,
+                    'spectator':3,
+                    'adventure':2, 
+                    '0':0, 
+                    '1':1, 
+                    '2':2, 
+                    '3':3
+                }[config.spout.player.gamemode.toString().toLowerCase()],
                 previousGameMode: 255,
                 worldNames: loginPacket.worldNames,
                 dimensionCodec: loginPacket.dimensionCodec,

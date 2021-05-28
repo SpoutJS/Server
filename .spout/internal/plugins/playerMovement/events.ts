@@ -19,11 +19,11 @@ function move(player: Player, data: any) {
 	let { x, y, z, onGround } = data;
 	for (let user of player._server.players) {
 		if (player.uuid === user.uuid) continue;
-		user.sendPacket('rel_entity_move', {
+		user.sendPacket('position', {
 			entityId: user.id,
-			dX:x,
-			dY:y,
-			dZ:z,
+			x,
+			y,
+			z,
 			onGround,
 		});
 	}

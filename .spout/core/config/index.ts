@@ -3,17 +3,26 @@ import { parse } from 'yaml';
 
 import { readFile, writeFile } from 'fs/promises';
 
+import logger from '../../utils/logger';
+
+import { Config } from "../server";
+
+const spout = logger.create('Spout');
+const logs = logger.create('Config');
+
 const main = async () => {
-    console.log("[SPOUT] Loading config!")
+    logs.info("Loading config!")
     if (!existsSync('./server/config.yml')) {
-        console.log("[SPOUT] No config file found! Creating one.")
+        logs.warn("No config file found! Creating one.")
         await writeFile(
             './server/config.yml',
             await readFile('./.spout/core/config/default.yml')
         );
     }
-    console.log("[SPOUT] Config loaded!")
-    return await parse(await readFile('./server/config.yml', 'utf-8'));
+    logs.info("Config loaded!")
+    const config: Config = await parse(await readFile('./server/config.yml', 'utf-8'));
+    logs.debug(config as any);
+    return config;
 };
 
 export default main;

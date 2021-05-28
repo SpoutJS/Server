@@ -1,0 +1,34 @@
+{
+    "name": "spout",
+    "version": "1.0.1",
+    "description": "The simple, easy to use, and staff friendly Spigot fork",
+    "main": "lib/.spout/index.js",
+    "scripts": {
+        "start": "tsc -p . && node lib/index.js",
+        "dev": "concurrently \"tsc -w\" \"nodemon --watch lib/**/* --ext js\"",
+        "live": "concurrently \"tsc -w\" \"nodemon --watch '**/**/*' '.spout/internal/plugins/**/*' --ext ts\""
+    },
+    "author": "Blocks_n_more & Corman",
+    "license": "GPL",
+    "keywords": [
+        "Minecraft",
+        "Spigot",
+        "Paper",
+        "Server",
+        "Plugins"
+    ],
+    "dependencies": {
+        "@types/node": "^15.3.0",
+        "bluebird": "^3.7.2",
+        "minecraft-data": "^2.84.0",
+        "minecraft-protocol": "^1.25.0",
+        "prismarine-block": "^1.9.0",
+        "prismarine-chunk": "^1.22.0",
+        "that-logger": "^1.0.7",
+        "vec3": "^0.1.7",
+        "yaml": "^1.10.2"
+    },
+    "devDependencies": {
+        "@types/bluebird": "^3.5.35"
+    }
+}
