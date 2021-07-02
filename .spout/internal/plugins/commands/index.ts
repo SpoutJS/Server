@@ -1,5 +1,5 @@
 import { SpoutServer, Command, Player } from "../SpoutAPI";
-import { pluginlist } from "../../../core/plugin/loader";
+import { pluginList } from "../../../core/plugin/loader";
 
 export const main = (server: SpoutServer<any>) =>{
     new Command({
@@ -21,7 +21,12 @@ export const main = (server: SpoutServer<any>) =>{
         aliases:["plugins", "whatpluginsisthisserverusing?"],
         description: "Lists all loaded plugins",
         run: (player: Player) =>{
-            let allcommands = ;
+            let allcommands = pluginList.filter(i=>!i.internal);
+            allcommands.push({
+                internal:true,
+                baseName: "Spout",
+                config: {}
+            })
             player.sendMessage([
                 "&7&l------------------------",
                 "&7Plugins ("+allcommands.length+"):",
