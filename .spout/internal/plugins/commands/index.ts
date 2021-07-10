@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { SpoutServer, Command, Player } from "../SpoutAPI";
 import { pluginList } from "../../../core/plugin/loader";
 
@@ -62,3 +63,13 @@ export const main = (server: SpoutServer<any>) =>{
         }   
     })
 }   
+=======
+import { SpoutServer } from '../SpoutAPI';
+import { TabComplete } from './events';
+import { load } from "./commands";
+
+export const main = (server: SpoutServer<any>) => {
+	server.addEvent(TabComplete);
+    load(server);
+};
+>>>>>>> 8953cf528ba8224cede1575015fbc45698e12c3a
